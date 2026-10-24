@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 
 namespace PrimeNumbersAgain;
@@ -36,8 +36,49 @@ class Program
     /// <returns>The prime at position <paramref name="n"/> once implemented; currently returns 0 as a placeholder.</returns>
     static int FindNthPrime(int n)
     {
+        if (n == 1)
+        {
+            return 2;
+        }
+        int primeCount = 1;
+        for (int i = 3; primeCount < n; i += 2)
+        {
+            if (isPrime(i))
+            {
+                primeCount++;
+                if (primeCount == n)
+                {
+                    return i;
+                }
+            }
+        }
+        bool isPrime(int number)
+        {
+            if (number < 2)
+            {
+                return false;
+            }
+            if (number == 2)
+            {
+                return true;
+            }
+            // any factor above the sqrt would have a matching factor below it
+            //after ruling out even numbers, check only odds up to the sqrt 
+            if (number % 2 == 0)
+            {
+                return false;
+            }
+            for (int j = 3; j <= Math.Sqrt(number); j += 2)
+            {
+                if (number % j == 0)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
         return 0;
-    }
+}
 
     /// <summary>
     /// Prompts until the user enters a valid 32-bit integer.
